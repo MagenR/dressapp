@@ -1,6 +1,4 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import StackNavigator from './StackNavigator';
-
 import HomeScreen from '../screens/home';
 import ShirtChoiceScreen from '../screens/shirt';
 import PantsChoiceScreen from '../screens/pants';

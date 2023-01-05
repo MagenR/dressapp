@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Text, View, StyleSheet, Button } from 'react-native';
-// import DrawerNavigator from '../navigation/DrawerNavigator';
 import { useNavigation } from '@react-navigation/native'
-import { getClothes } from '../redux/ducks/clothesSlice';
 
-export default HomeScreen = () => { //{ navigation }
-    const drawerNav = useNavigation();
+export default HomeScreen = () => {
     const currentSet = useSelector(state => state.clothes.currentSet);
     const chosenSets = useSelector(state => state.clothes.chosenSets);
     [pieces, setTotalPieces] = useState({
         Total: 0,
         Chosen: 0
     });
-    // const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const countPieces = (currentSet) => {
-        let Total = 0, Chosen = 0; //currentSet.reduce((r, o) => r + +!Object.values(o).includes(null), 0);
+        let Total = 0, Chosen = 0;
         const nonNullValues = Object.values(currentSet).filter(value => value !== null);
         Chosen = nonNullValues.length;
         Total = Object.keys(currentSet).length;
@@ -36,29 +33,14 @@ export default HomeScreen = () => { //{ navigation }
             </View>
 
             <View style={styles.textBox}>
-                <Text>Completed Sets: 0</Text>
+                <Text>Completed Sets: {chosenSets.length}</Text>
                 <Text>Current Set Status: {pieces.Chosen} \ {pieces.Total}</Text>
             </View>
-
-            {/* <View style={styles.buttonPanel}>
-                <Button
-                    title='Shirt'
-                    onPress={() => drawerNav.navigate('Shirts')}
-                />
-                <Button
-                    title='Pants'
-                    onPress={() => drawerNav.navigate('Pants')}
-                />
-                <Button
-                    title='Shoes'
-                    onPress={() => drawerNav.navigate('Shoes')}
-                />
-            </View> */}
 
             {pieces.Chosen === pieces.Total &&
                 <Button
                     title="Go to Success screen"
-                    onPress={() => navigation.navigate('Success')} />
+                    onPress={() => navigation.navigate('SuccessScreen')} />
             }
 
         </View>

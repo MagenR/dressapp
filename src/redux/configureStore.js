@@ -1,6 +1,5 @@
 import { configureStore, combineReducers, getDefaultMiddleware} from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-//import { watcherSaga } from "./sagas/rootSaga";
 import clothesReducer from "./ducks/clothesSlice";
 import { handleGetClothesData } from "./sagas/handlers/clothes";
 

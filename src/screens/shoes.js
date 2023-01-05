@@ -19,7 +19,7 @@ const ShoesChoiceScreen = () => {
     setSelectedColor(color);
   }
 
-  const selectShirt = shoe => {
+  const selectShoes = shoe => {
     setSelectedShoe(shoe);
   };
 
@@ -41,7 +41,7 @@ const ShoesChoiceScreen = () => {
         {
           text: 'OK',
           onPress: () => {
-            dispatch(addShoe({id: selectedShoe.id, name: selectedShoe.name, size, color: selectedColor }));
+            dispatch(addShoe({ id: selectedShoe.id, brand: selectedShoe.brand, name: selectedShoe.name, size, color: selectedColor }));
             setSelectedShoe(null);
             setSelectedSize(null);
             setSelectedColor(null);
@@ -57,7 +57,7 @@ const ShoesChoiceScreen = () => {
     return shoes.map(shoe => {
       return (
         <View key={shoe.id} style={styles.shoeContainer}>
-          <Text style={styles.shoeName}>{shoe.name}</Text>
+          <Text style={styles.shoeName}>{shoe.brand + ' ' + shoe.name}</Text>
           <View style={styles.buttonContainer}>
             {shoe.colors.map(color => (
               <TouchableOpacity key={color} style={[styles.button, { backgroundColor: color }]} onPress={() => ShoeAndColor(shoe, color)}>
@@ -69,7 +69,7 @@ const ShoesChoiceScreen = () => {
             <View style={styles.sizeMenu}>
               <Text style={styles.menuTitle}>Select size:</Text>
               {shoe.sizes.map(size => (
-                <Button key={size} title={size} onPress={() => selectSize(size)} />
+                <Button key={size} title={size.toString()} onPress={() => selectSize(size)} />
               ))}
             </View>
           )}
@@ -79,9 +79,14 @@ const ShoesChoiceScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {renderShoes()}
-    </ScrollView>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headline}> Found {shoes.length} Shoes</Text>
+      </View>
+      <ScrollView >
+        {renderShoes()}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -89,6 +94,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'grey',
+  },
+  headerContainer: {
+    backgroundColor: 'white'
+  },
+  headline: {
+    textAlign: 'center',
+    fontSize: 30,
   },
   shoeContainer: {
     borderBottomWidth: 1,

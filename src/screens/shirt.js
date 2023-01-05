@@ -41,7 +41,7 @@ const ShirtChoiceScreen = () => {
         {
           text: 'OK',
           onPress: () => {
-            dispatch(addShirt({id: selectedShirt.id, name: selectedShirt.name, size, color: selectedColor }));
+            dispatch(addShirt({ id: selectedShirt.id, brand: selectedShirt.brand, name: selectedShirt.name, size, color: selectedColor }));
             setSelectedShirt(null);
             setSelectedSize(null);
             setSelectedColor(null);
@@ -57,7 +57,7 @@ const ShirtChoiceScreen = () => {
     return shirts.map(shirt => {
       return (
         <View key={shirt.id} style={styles.shirtContainer}>
-          <Text style={styles.shirtName}>{shirt.name}</Text>
+          <Text style={styles.shirtName}>{shirt.brand + ' ' + shirt.name}</Text>
           <View style={styles.buttonContainer}>
             {shirt.colors.map(color => (
               <TouchableOpacity key={color} style={[styles.button, { backgroundColor: color }]} onPress={() => ShirtAndColor(shirt, color)}>
@@ -79,9 +79,14 @@ const ShirtChoiceScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {renderShirts()}
-    </ScrollView>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headline}> Found {shirts.length} Shirts</Text>
+      </View>
+      <ScrollView>
+        {renderShirts()}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -89,6 +94,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'grey',
+  },
+  headerContainer: {
+    backgroundColor: 'white'
+  },
+  headline: {
+    textAlign: 'center',
+    fontSize: 30,
   },
   shirtContainer: {
     borderBottomWidth: 1,
@@ -120,37 +132,3 @@ const styles = StyleSheet.create({
 });
 
 export default ShirtChoiceScreen;
-
-// export default ShirtChoiceScreen = () => {
-//   const shirts = useSelector(state => state.clothes.shirts);
-//   const loading = useSelector(state => state.clothes.loading);
-
-//   if (!shirts && loading) {
-//     return <Text>Loading...</Text>;
-//   }
-
-//   return (
-//     <View>
-//       <Text>Shirts</Text>
-      
-
-//       {shirts? <View>
-//         <Text>Amount: {shirts.length}</Text>
-//         {shirts.map(shirt => (
-//           <View key={shirt.id}>
-//             {/* <Image source={item.image} alt={item.name} /> */}
-//             <Text>{shirt.name}</Text>
-//             {/* <Text>{item.type}</Text> */}
-//             {/* {shirt.colors.map(color => (
-//               <Button>prop</Button>
-//             ))} */}
-
-//             {/* clicked?
-//             <Text>{item.size}</Text> */}
-//           </View>
-//         ))}
-//       </View> : <Text>Loading...</Text>}
-
-//     </View>
-//   )
-// }

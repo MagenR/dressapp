@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-// import StackNavigator from './src/navigation/StackNavigator';
-import DrawerNavigator from './src/navigation/DrawerNavigator';
+import StackNavigator from './src/navigation/StackNavigator';
 import  store  from './src/redux/configureStore.js';
 import { Provider } from 'react-redux';
 
@@ -14,7 +13,7 @@ export default function App() {
     // </View>
     <Provider store={store}>
       <NavigationContainer>
-        <DrawerNavigator />
+        <StackNavigator />
       </NavigationContainer>
     </Provider>
   );

@@ -22,20 +22,29 @@
             state.shirts = clothesData.results.filter(cloth => {return  cloth.type === "shirt"});
             state.pants = clothesData.results.filter(cloth => {return  cloth.type === "pants"});
             state.loading = false;
-            //console.log(state.shirts);
-            //return {...state, ...state.shoes, ...state.shirts, ...state.pants, ...state.loading};
         },
         addShirt(state, action) {
             state.currentSet.shirt = action.payload;
             console.log(state.currentSet.shirt);
         },
-        addShoe(state, action){
-            state.currentSet.shoe = action.payload;
-            console.log(state.currentSet.shirt);
+        addShoe(state, action) {
+            state.currentSet.shoes = action.payload;
+            console.log(state.currentSet.shoes);
+        },
+        addPants(state, action) {
+            state.currentSet.pants = action.payload;
+            console.log(state.currentSet.pants);
+        },
+        removeClothing(state, action) {
+                state.chosenSets.push(state.currentSet);
+                state.currentSet.shirt = null,
+                state.currentSet.pants = null,
+                state.currentSet.shoes = null
+            }
         }
-    }
+        
  });
 
- export const { setClothes, addShirt, addShoe } = clothesSlice.actions;
+ export const { setClothes, addShirt, addPants, addShoe, removeClothing } = clothesSlice.actions;
 
  export default clothesSlice.reducer;
