@@ -1,43 +1,36 @@
  import { createSlice } from "@reduxjs/toolkit";
+ import sortByProperties from "../../components/SortByProperties";
+
+// Properties to sort by the returned list.
+const sortProperties = ['brand', 'name']; 
 
  const clothesSlice = createSlice({
     name: "clothes",
     initialState: {
-        loading: true,
         pants: [],
         shirts: [],
         shoes: [],
         chosenSets: [],
         currentSet: {
-            shirt: null,
+            shirts: null,
             pants: null,
             shoes: null
         }
     },
     reducers: {
         setClothes(state, action) {
-            const clothesData = action.payload;
-
-            state.shoes = clothesData.results.filter(cloth => {return  cloth.type === "shoes"});
-            state.shirts = clothesData.results.filter(cloth => {return  cloth.type === "shirt"});
-            state.pants = clothesData.results.filter(cloth => {return  cloth.type === "pants"});
-            state.loading = false;
+            // Get the list from saga, sort it once by the properties for future renders.
+            const clothesData = sortByProperties(action.payload.results, sortProperties);
+            state.shoes = clothesData.filter(cloth => {return  cloth.type === "shoes"});
+            state.shirts = clothesData.filter(cloth => {return  cloth.type === "shirt"});
+            state.pants = clothesData.filter(cloth => {return  cloth.type === "pants"});
         },
-        addShirt(state, action) {
-            state.currentSet.shirt = action.payload;
-            console.log(state.currentSet.shirt);
-        },
-        addShoe(state, action) {
-            state.currentSet.shoes = action.payload;
-            console.log(state.currentSet.shoes);
-        },
-        addPants(state, action) {
-            state.currentSet.pants = action.payload;
-            console.log(state.currentSet.pants);
+        addClothing(state, action) {
+            state.currentSet[action.payload.clothingType] = action.payload.clothing;
         },
         removeClothing(state, action) {
                 state.chosenSets.push(state.currentSet);
-                state.currentSet.shirt = null,
+                state.currentSet.shirts = null,
                 state.currentSet.pants = null,
                 state.currentSet.shoes = null
             }
@@ -45,6 +38,6 @@
         
  });
 
- export const { setClothes, addShirt, addPants, addShoe, removeClothing } = clothesSlice.actions;
+ export const { setClothes, removeClothing, addClothing } = clothesSlice.actions;
 
  export default clothesSlice.reducer;

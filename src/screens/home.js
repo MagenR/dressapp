@@ -21,7 +21,7 @@ export default HomeScreen = () => {
     }
 
     useEffect(() => {
-        console.log(currentSet);
+        //console.log(currentSet);
         countPieces(currentSet);
     }, [currentSet]);
 
@@ -38,7 +38,7 @@ export default HomeScreen = () => {
             </View>
 
             {pieces.Chosen === pieces.Total &&
-                <Button
+                <Button style={styles.successButton}
                     title="Go to Success screen"
                     onPress={() => navigation.navigate('SuccessScreen')} />
             }
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     container: {
         //flex: 1,
         justifyContent: "center",
-        //alignItems: "center"
+        alignItems: "center"
     },
     headingBox: {
         alignItems: "center",
@@ -64,11 +64,15 @@ const styles = StyleSheet.create({
     },
     textBox: {
         //justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        margin: 40
     },
     buttonPanel: {
         margin: 40,
         flexDirection: "row",
         justifyContent: "space-between"
+    },
+    successButton: {
+        padding: 40,
     }
 });

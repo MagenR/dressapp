@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Dimensions, View, Text, StyleSheet, Button } from 'react-native';
+import { Image, View, Text, StyleSheet, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeClothing } from '../redux/ducks/clothesSlice';
 import { useNavigation } from '@react-navigation/native'
@@ -8,6 +8,7 @@ const SuccessScreen = () => {
   const clothing = useSelector(state => state.clothes.currentSet);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const cellNames = ["Type", "Brand", "Name", "Color", "Size"];
 
   const images = [
     'https://www.incimages.com/uploaded_files/image/1920x1080/getty_495142964_198701.jpg',
@@ -15,9 +16,9 @@ const SuccessScreen = () => {
     'https://www.incimages.com/uploaded_files/image/1920x1080/getty_459097117_370958.jpg'
   ];
 
+  // Used for random generation of images.
   const index = Math.floor(Math.random() * images.length);
   const imageUrl = images[index];
-  const screenWidth = Dimensions.get('window').width;
 
   const removeCurrentClothingAndGoBack = () => {
     dispatch(removeClothing());
@@ -27,20 +28,18 @@ const SuccessScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.ImageContainer}>
-      <Image
-        source={{ uri: imageUrl }}
-        style={{ width: "100%", height: "100%" }}
-        resizeMode="contain"
-      />
+        <Image
+          source={{ uri: imageUrl }}
+          style={{ width: "100%", height: "100%" }}
+          resizeMode="contain"
+        />
       </View>
       <Text style={styles.header}>Your Selection:</Text>
       <View style={styles.table}>
         <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Type</Text>
-          <Text style={styles.tableCell}>Brand</Text>
-          <Text style={styles.tableCell}>Name</Text>
-          <Text style={styles.tableCell}>Color</Text>
-          <Text style={styles.tableCell}>Size</Text>
+          {cellNames.map(cell => {
+            <Text style={styles.tableCell}>{cell}</Text>
+          })}
         </View>
         {Object.entries(clothing).map(([type, item]) => (
           <View style={styles.tableRow} key={type}>
@@ -65,11 +64,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ImageContainer: { 
-    borderWidth: 1, 
-    borderColor: 'black', 
-    height: 200, 
-    width: 200 
+  ImageContainer: {
+    borderWidth: 1,
+    borderColor: 'black',
+    height: 200,
+    width: 200
   },
   header: {
     fontSize: 20,
